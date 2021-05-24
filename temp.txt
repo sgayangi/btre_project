@@ -1,0 +1,4 @@
+To activate virtual env type in 
+venv\Scripts\activate
+
+not activate.bat
