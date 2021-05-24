@@ -1,0 +1,40 @@
+Static files are the things like images and css and fonts and stuff
+
+1. Include in folder made by running startproject under folder called static
+
+2. Head to settings.py under same folder and add the STATIC_ROOT and STATICFILES_DIRS as follows
+
+STATIC_ROOT = os.path.join(BASE_DIR,'static')   <------------this points to the static directory auto generated when all the static files have been collected
+STATIC_URL = '/static/'     <--------this should already be included
+STATICFILES_DIRS = [        <--------points to the directory we included manually
+    os.path.join(BASE_DIR,'btre/static')
+]
+
+3. Run python manage.py collectstatic
+    -> Creates a static folder in the base directory
+
+4. In base.html: Including the style files
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{% static 'css/all.css' %}">  <----- Important, so 'static' means the static directory specified in the 
+                                                                          static root thing in settings.py
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+        <!-- Custom -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- Lightbox -->
+        <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+        <title>BT Real Estate</title>
+    </head>
+    <body>
+        {% block content %} {% endblock %}
+        <script src="{% static 'js/jquery-3.3.1.min.js' %} "></script>      <----- same here
+        <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
+        <script src="{% static 'js/lightbox.min.js' %} "></script>
+        <script src="{% static 'js/main.js' %} "></script>
+    </body>
+</html>
