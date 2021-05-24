@@ -1,0 +1,88 @@
+To activate virtual env type in 
+venv\Scripts\activate
+
+not activate.bat
+
+====== USEFUL ========
+
+1. PARSING JSON
+
+import json
+
+To parse a json variable into a python dictionary:
+
+parsed_value = json.loads(json_object)
+
+parsed_value will be a python dictionary
+
+To create a json object from dictionary:
+
+json_object = json.dumps(dictionary_to_be_converted)
+
+
+2. MAKING A NEW APP
+
+python manage.py startapp pages
+
+So this folder will store all the pages of the project
+
+3. Once you make a new app, inside that folder make a "urls.py" page. In that you specify the routes belonging to that folder
+
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index') <---- homepage, which points to the index function in the views file inside the pages folder
+]
+
+The views file contains the functions that renders the necessary html pages for the website
+Then in the project that was auto created when startproject was run, in that urls.py file, you add the route 
+
+path('', include('pages.urls'))
+
+to redirect all urls according to the urls specified in the pages/urls.py file.
+
+4. Specifying where to look for the html templates
+In the project autocreated by startproject, go to settings.py, then in TEMPLATES, under DIRS =[] add the path to the folder holding the html 
+templates like
+
+'DIRS': [os.path.join(BASE_DIR,'templates')],
+
+Then in views.py for each page to be rendered, you create a function like so.
+
+# The views file in pages folder
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def index(request):
+    return render(request, 'pages/index.html')
+
+def about(request):
+    return render(request, 'pages/about.html')
+
+5. Base template for html:
+
+base.html:
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>BT Real Estate</title>
+    </head>
+    <body>
+        {% block content %} {% endblock %}
+        
+        <script src="" async defer></script>
+    </body>
+</html>
+
+Any other html file:
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Home</h1>
+
+{% endblock %}
